@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+
+body,html {
+    @apply h-full w-full;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
