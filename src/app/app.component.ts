@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { MouseChaserComponent } from "./test/mouse-chaser/mouse-chaser.component";
 import { AimTrainerComponent } from "./test/aim-trainer/aim-trainer.component";
 import { CommonModule } from '@angular/common';
-import { CaseOpenerComponent } from "./test/case-opener/case-opener.component";
+import { Test123Component } from "./test/test123/test123.component";
 
 @Component({
   selector: 'app-root',
   imports: [
-    // MouseChaserComponent,
-    // AimTrainerComponent,
-    CaseOpenerComponent
+    Test123Component
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

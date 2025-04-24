@@ -33,7 +33,7 @@ export class MouseChaserComponent {
   @ViewChild('squareBlock', { static: false })
   squareBlock: ElementRef | null = null;
 
-  animationDelay = 100;
+  animationDelay = 1;
 
   queue: MouseClass[] = [];
   isMoving = false;
@@ -43,7 +43,8 @@ export class MouseChaserComponent {
 
   cloneColor = '#81ffc5'
 
-  intervalIsOn = false;
+  // intervalIsOn = false;
+  intervalIsOn = true;
 
   constructor(
     protected elementRef: ElementRef,
@@ -80,10 +81,7 @@ export class MouseChaserComponent {
     const mouseX = this.mouseBlock?.nativeElement.offsetLeft + (this.mouseBlock?.nativeElement.offsetWidth / 2);
     const mouseY = this.mouseBlock?.nativeElement.offsetTop + (this.mouseBlock?.nativeElement.offsetHeight / 2);
 
-    const clone = this.mouseBlock?.nativeElement.cloneNode(true) as HTMLElement;
-    clone.style.backgroundColor = this.getRandomHexColor();
-    clone.style.zIndex = '1000';
-    this.elementRef.nativeElement.appendChild(clone);
+    const clone = this.makeACopy(this.mouseBlock?.nativeElement);
 
     this.queue.push(new MouseClass(mouseX, mouseY, clone));
 
@@ -97,6 +95,14 @@ export class MouseChaserComponent {
         this.holdMouse();
       }, this.movingInterval);
     }
+  }
+
+  makeACopy(original: HTMLElement): HTMLElement {
+    const clone = original.cloneNode(true) as HTMLElement;
+    clone.style.backgroundColor = this.getRandomHexColor();
+    clone.style.zIndex = '1000';
+    this.elementRef.nativeElement.appendChild(clone);
+    return clone
   }
 
   updatePos() {
