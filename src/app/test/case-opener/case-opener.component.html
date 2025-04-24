@@ -1,0 +1,48 @@
+<!-- cs2-case-opener.component.html -->
+<div class="w-full h-screen bg-gray-900 text-white flex flex-col items-center justify-center">
+    <h1 class="text-4xl font-bold mb-6">CS2 Case Opener</h1>
+  
+    <!-- Open Case Button -->
+    <button
+      (click)="openCase()"
+      class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-lg shadow transition disabled:opacity-50 mb-8"
+      [disabled]="isRolling"
+    >
+      {{ isRolling ? 'Rolling...' : 'Open Case' }}
+    </button>
+  
+    <!-- Scrolling Item Container -->
+    <div class="relative w-[520px] h-[80px] bg-gray-800 rounded-lg border-4 border-gray-600 overflow-hidden">
+      <!-- Center Marker (where the prize will land) -->
+      <div class="absolute w-[60px] h-full top-0 left-1/2 -translate-x-1/2 z-10 border-l-4 border-r-4 border-white pointer-events-none"></div>
+  
+      <!-- Rolling Items -->
+      <div
+        class="flex gap-2 absolute"
+        [ngStyle]="{
+          transform: isRolling ? 'translateX(-' + (centerIndex * 60) + 'px)' : 'translateX(0)',
+          transition: isRolling ? 'transform 3.5s cubic-bezier(0.33, 1, 0.68, 1)' : 'none'
+        }"
+      >
+        <div
+          *ngFor="let item of rollingItems; let i = index"
+          class="w-[60px] h-[60px] flex items-center justify-center text-xs rounded shadow-lg text-black transition-all duration-300 ease-out"
+          [ngClass]="[
+            item.color,
+            (!isRolling && i === centerIndex) ? 'animate-glow scale-110 font-bold' : ''
+          ]"
+        >
+          {{ item.name.split('|')[0].trim() }}
+        </div>
+      </div>
+    </div>
+  
+    <!-- Display the final prize when selected -->
+    <div *ngIf="selectedItem" class="mt-6 text-center">
+      <p class="text-xl font-semibold">You got:</p>
+      <p class="text-2xl mt-2" [ngClass]="selectedItem.color">
+        {{ selectedItem.name }}
+      </p>
+    </div>
+  </div>
+  

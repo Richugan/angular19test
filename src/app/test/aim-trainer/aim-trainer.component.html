@@ -1,0 +1,21 @@
+<div class="w-full h-screen bg-gray-100 flex flex-col items-center justify-center relative overflow-hidden">
+    <h1 class="text-3xl font-bold mb-4">Aim Trainer</h1>
+    <p class="text-lg mb-1">Time Left: {{ timeLeft }}</p>
+    <p class="text-lg mb-4">Score: {{ score }}</p>
+  
+    <button
+      *ngIf="!gameStarted"
+      (click)="startGame()"
+      class="px-6 py-2 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition"
+    >
+      Start Game
+    </button>
+  
+    <div
+      *ngIf="gameStarted"
+      class="w-[50px] h-[50px] bg-red-500 rounded-full absolute cursor-pointer transition-all duration-200"
+      [ngStyle]="{ top: targetY + 'px', left: targetX + 'px' }"
+      (click)="onTargetClick()"
+    ></div>
+  </div>
+  

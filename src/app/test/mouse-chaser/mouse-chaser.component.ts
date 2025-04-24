@@ -33,17 +33,18 @@ export class MouseChaserComponent {
   @ViewChild('squareBlock', { static: false })
   squareBlock: ElementRef | null = null;
 
-  animationDelay = 1;
+  animationDelay = 100;
 
   queue: MouseClass[] = [];
   isMoving = false;
   firstMove = true;
 
-  interval: any;
-  ticks = 0;
-
   movingInterval = 1;
+
   cloneColor = '#81ffc5'
+
+  intervalIsOn = false;
+
   constructor(
     protected elementRef: ElementRef,
   ) {
@@ -75,22 +76,27 @@ export class MouseChaserComponent {
   holdMouse() {
     if (!this.mouseHolds) return;
 
+
     const mouseX = this.mouseBlock?.nativeElement.offsetLeft + (this.mouseBlock?.nativeElement.offsetWidth / 2);
     const mouseY = this.mouseBlock?.nativeElement.offsetTop + (this.mouseBlock?.nativeElement.offsetHeight / 2);
 
     const clone = this.mouseBlock?.nativeElement.cloneNode(true) as HTMLElement;
-    clone.style.backgroundColor = this.cloneColor;
+    clone.style.backgroundColor = this.getRandomHexColor();
+    clone.style.zIndex = '1000';
     this.elementRef.nativeElement.appendChild(clone);
 
     this.queue.push(new MouseClass(mouseX, mouseY, clone));
+
 
     if (!this.isMoving) {
       this.updatePos();
     }
 
-    setTimeout(() => {
-      this.holdMouse();
-    }, this.movingInterval);
+    if (this.intervalIsOn) {
+      setTimeout(() => {
+        this.holdMouse();
+      }, this.movingInterval);
+    }
   }
 
   updatePos() {
@@ -120,13 +126,18 @@ export class MouseChaserComponent {
           shiftedElem.elem.remove()
         }
 
-      }, this.animationDelay); // 1 сек пауза перед следующим движением
-    }, delay); // Время transition
+      }, this.animationDelay / 2);
+    }, delay / 2);
   }
 
 
   toggleShow() {
     this.show = !this.show;
+  }
+
+  getRandomHexColor() {
+    const hex = Math.floor(Math.random() * 0xffffff).toString(16);
+    return `#${hex.padStart(6, '0')}`;
   }
 
 

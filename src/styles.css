@@ -8,3 +8,21 @@ body,html {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+@layer utilities {
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+    }
+    50% {
+      box-shadow: 0 0 15px 8px rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .animate-glow {
+    animation: pulse-glow 1.5s ease-in-out infinite;
+  }
+}
