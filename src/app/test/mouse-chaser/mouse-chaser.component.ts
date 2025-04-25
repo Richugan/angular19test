@@ -33,13 +33,13 @@ export class MouseChaserComponent {
   @ViewChild('squareBlock', { static: false })
   squareBlock: ElementRef | null = null;
 
-  animationDelay = 1;
+  animationDelay = 10;
+  movingInterval = 10;
 
   queue: MouseClass[] = [];
   isMoving = false;
   firstMove = true;
 
-  movingInterval = 1;
 
   cloneColor = '#81ffc5'
 
@@ -76,7 +76,6 @@ export class MouseChaserComponent {
 
   holdMouse() {
     if (!this.mouseHolds) return;
-
 
     const mouseX = this.mouseBlock?.nativeElement.offsetLeft + (this.mouseBlock?.nativeElement.offsetWidth / 2);
     const mouseY = this.mouseBlock?.nativeElement.offsetTop + (this.mouseBlock?.nativeElement.offsetHeight / 2);
